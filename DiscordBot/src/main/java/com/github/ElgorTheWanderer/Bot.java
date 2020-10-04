@@ -84,7 +84,7 @@ public class Bot {
         String s3 = ("Player KillFame is - " + i1);
         System.out.println(s1 + s2 + s3);
 
-        message.getChannel().flatMap(Channel -> Channel.createMessage(s1 + s2 + s3));
+        message.getChannel().flatMap(Channel -> Channel.createMessage(s1 + s2 + s3)).subscribe();
         }
 
     //Отрезать команду от имени.
