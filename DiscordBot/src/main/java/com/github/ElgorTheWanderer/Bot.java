@@ -18,16 +18,20 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import org.json.*;
 
-
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 
 
 public class Bot {
 
 
     public static void main(String[] args) {
-        GatewayDiscordClient client = DiscordClientBuilder.create("Token").build().login().block();
+        Map<String, String> env = System.getenv();
+        String discordToken = env.get("DISCORD_API_KEY");
+        assert discordToken != null : "Discord API Key is missing";
+
+        GatewayDiscordClient client = DiscordClientBuilder.create(discordToken).build().login().block();
 
         client.getEventDispatcher().on(ReadyEvent.class)
                 .subscribe(event -> {
