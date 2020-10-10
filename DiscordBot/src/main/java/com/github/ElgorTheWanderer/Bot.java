@@ -52,6 +52,7 @@ public class Bot {
         client.onDisconnect().block();
     }
 
+
     //Основной метод.
     public static void processIncomingMessage(Message message) {
 

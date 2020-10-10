@@ -4,7 +4,7 @@ import com.github.ElgorTheWanderer.PlayerStructure;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class AlbionClientResponseParser {
+class AlbionClientResponseParser {
 
     public PlayerStructure getPlayerByNameFromResponse(String JSONString, String name) throws Exception {
         JSONArray arr = new JSONObject(JSONString).getJSONArray("players");
