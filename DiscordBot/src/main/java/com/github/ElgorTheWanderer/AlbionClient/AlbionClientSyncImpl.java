@@ -14,6 +14,7 @@ public class AlbionClientSyncImpl implements AlbionClient{
         return instance;
     }
 
+    AlbionClientResponseParser parser = new AlbionClientResponseParser();
 
     @Override
     public PlayerStructure findPlayerByName(String accountName) throws Exception {
@@ -26,7 +27,7 @@ public class AlbionClientSyncImpl implements AlbionClient{
         System.out.println();
 
         //Получить нужный объект JSON. Передать данные структуре.
-        PlayerStructure player = parseResultToStructure(jsonReplyString, accountName);
+        PlayerStructure player = parser.getPlayerByNameFromResponse(jsonReplyString, accountName);
         return player;
 
     }
@@ -37,27 +38,6 @@ public class AlbionClientSyncImpl implements AlbionClient{
         return url;
     }
 
-    //Получить объект JSON с нужным именем игрока. Передать данные структуре.
-    private PlayerStructure parseResultToStructure(String JSONString, String name) throws Exception {
-        JSONArray arr = new JSONObject(JSONString).getJSONArray("players");
 
-        PlayerStructure player = null;
-        for (int i = 0; i < arr.length(); i++) {
-            if (arr.getJSONObject(i).getString("Name").equals(name)) {
-                JSONObject jo;
-                jo = arr.getJSONObject(i);
-                player = new PlayerStructure();
-                player.playerId = jo.getString("Id");
-                player.playerName = jo.getString("Name");
-                player.playerKillFame = jo.getInt("KillFame");
-                break;
-            }
-        }
-        if (player == null){
-            throw new Exception("User not found");
-        }
-
-        return player;
-    }
 
 }
