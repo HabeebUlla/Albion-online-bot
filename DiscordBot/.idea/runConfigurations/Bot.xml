@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Bot" type="Application" factoryName="Application" nameIsGenerated="true">
     <option name="MAIN_CLASS_NAME" value="com.github.ElgorTheWanderer.Bot" />
-    <module name="DiscordBot.main" />
+    <module name="com.github.ElgorTheWanderer.DiscordBot.main" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="com.github.ElgorTheWanderer.*" />

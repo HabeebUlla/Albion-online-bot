@@ -1,5 +1,7 @@
 package com.github.ElgorTheWanderer;
 
+import com.github.ElgorTheWanderer.AlbionClient.AlbionClient;
+import com.github.ElgorTheWanderer.AlbionClient.AlbionClientSyncImpl;
 import discord4j.core.DiscordClientBuilder;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.lifecycle.ReadyEvent;
@@ -27,6 +29,8 @@ import java.util.Map;
 
 public class Bot {
 
+    private static final AlbionClient albionClient = AlbionClientSyncImpl.getInstance();
+
 
     public static void main(String[] args) {
         Map<String, String> env = System.getenv();
@@ -48,6 +52,7 @@ public class Bot {
         client.onDisconnect().block();
     }
 
+
     //Основной метод.
     public static void processIncomingMessage(Message message) {
 
@@ -55,20 +60,14 @@ public class Bot {
 
         try {
             accountName = getCommandFromMessage(message.getContent());
-            String targetUrl = buildUrl(accountName);
-            System.out.println(targetUrl);
+            System.out.println(accountName);
+            PlayerStructure player = albionClient.findPlayerByName(accountName);
 
-            //http запрос-ответ.
-            String jsonReplyString = HttpClient.create().get().uri(targetUrl).responseContent().aggregate().asString().block();
-            System.out.println(jsonReplyString);
-            System.out.println();
 
-            //Получить нужный объект JSON. Передать данные структуре.
-            PlayerStructure player1 = parseResultToStructure(jsonReplyString, accountName);
             //Склеить и вернут сообщение в чат.
-            String s1 = ("Player Id is - " + player1.playerId + "\n");
-            String s2 = ("Player Name is - " + player1.playerName + "\n");
-            int i1 = (player1.playerKillFame);
+            String s1 = ("Player Id is - " + player.playerId + "\n");
+            String s2 = ("Player Name is - " + player.playerName + "\n");
+            int i1 = (player.playerKillFame);
             String s3 = ("Player KillFame is - " + i1);
             System.out.println(s1 + s2 + s3);
             message.getChannel().flatMap(Channel -> Channel.createMessage(s1 + s2 + s3)).subscribe();
@@ -77,9 +76,6 @@ public class Bot {
             String s = "Error: " + e.getMessage();
             message.getChannel().flatMap(Channel -> Channel.createMessage(s)).subscribe();
         }
-
-
-
     }
 
     //Отрезать команду от имени.
@@ -89,34 +85,5 @@ public class Bot {
         }
         String temp = messageContent.substring(6);
         return temp;
-    }
-
-    //Склеить адрес для запроса.
-    public static String buildUrl(String name) {
-        String url = ("https://gameinfo.albiononline.com/api/gameinfo/search?q=" + name);
-        return url;
-    }
-
-    //Получить объект JSON с нужным именем игрока. Передать данные структуре.
-    public static PlayerStructure parseResultToStructure(String JSONString, String name) throws Exception {
-        JSONArray arr = new JSONObject(JSONString).getJSONArray("players");
-
-        PlayerStructure player = null;
-        for (int i = 0; i < arr.length(); i++) {
-            if (arr.getJSONObject(i).getString("Name").equals(name)) {
-                JSONObject jo;
-                jo = arr.getJSONObject(i);
-                player = new PlayerStructure();
-                player.playerId = jo.getString("Id");
-                player.playerName = jo.getString("Name");
-                player.playerKillFame = jo.getInt("KillFame");
-                break;
-            }
-        }
-        if (player == null){
-         throw new Exception("User not found");
-        }
-
-        return player;
     }
 }
