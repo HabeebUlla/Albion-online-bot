@@ -2,9 +2,9 @@ package com.github.ElgorTheWanderer;
 
 public class PlayerStructure {
 
-    static String playerName;
-    static String playerId;
-    static int playerKillFame;
+    public String playerName;
+    public String playerId;
+    public int playerKillFame;
 
 
 }
