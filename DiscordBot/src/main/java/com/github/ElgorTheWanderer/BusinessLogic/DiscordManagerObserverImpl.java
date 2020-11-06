@@ -3,57 +3,69 @@ package com.github.ElgorTheWanderer.BusinessLogic;
 import com.github.ElgorTheWanderer.AlbionClient.AlbionClient;
 import com.github.ElgorTheWanderer.DiscordManager.DiscordManager;
 import com.github.ElgorTheWanderer.DiscordManager.DiscordManagerObserver;
-import com.github.ElgorTheWanderer.PlayerStructure;
 import discord4j.core.object.entity.Message;
 
 public class DiscordManagerObserverImpl implements DiscordManagerObserver {
 
     private final AlbionClient albionClient;
     private final DiscordManager discordManager;
+    private final String[] commandList = {"!user ", "!add ", "!remove ", "!price "};
 
     public DiscordManagerObserverImpl(AlbionClient albionClient, DiscordManager discordManager) {
         this.albionClient = albionClient;
         this.discordManager = discordManager;
     }
 
+    private String getCommand(Message message) {
+        String command = null;
+        for (int i = 0; i < commandList.length; i++) {
+            if (message.getContent().toLowerCase().startsWith(commandList[i])) {
+                command = commandList[i];
+            }
+        }
+        return command;
+    }
+
 
     private void processIncomingMessage(Message message) {
-        if(canProcessMessage(message.getContent()) == false){
+        if (canProcessMessage(message) == false) {
             return;
         }
-        String accountName = null;
+        if (getCommand(message) == "!user ") {
+            System.out.println("User command processed");                                                               //Delete this line.
+            UserProcessor userProcessor = new UserProcessor(albionClient, discordManager);
+            userProcessor.processUserCommand(message);
 
-        try {
-            accountName = getCommandFromMessage(message.getContent());
-            PlayerStructure player = albionClient.findPlayerByName(accountName);
-            String s1 = ("Player Id is - " + player.playerId + "\n");
-            String s2 = ("Player Name is - " + player.playerName + "\n");
-            int i1 = (player.playerKillFame);
-            String s3 = ("Player KillFame is - " + i1);
-            message.getChannel().subscribe(channel -> discordManager.sendMessage(s1 + s2 + s3, channel));
-        } catch (Exception e) {
-            e.printStackTrace();
-            String s = "Error: " + e.getMessage();
-            message.getChannel().flatMap(Channel -> Channel.createMessage(s)).subscribe();
+        }else if(getCommand(message) == "!add "){
+            System.out.println("Add command processed");                                                                //Delete this line.
+            AddProcessor addProcessor = new AddProcessor(albionClient, discordManager);
+            addProcessor.processAddCommand(message);
+
+
+        }else if(getCommand(message) == "!remove "){
+            System.out.println("Remove command processed");                                                             //Delete this line.
+            RemoveProcessor removeProcessor = new RemoveProcessor(albionClient, discordManager);
+            removeProcessor.processRemoveCommand(message);
+        }else if(getCommand(message) == "!price "){
+            System.out.println("Price command processed");                                                              //Delete this line.
+            PriceProcessor priceProcessor = new PriceProcessor(albionClient, discordManager);
+            priceProcessor.processPriceCommand(message);
         }
     }
 
-
-    private String getCommandFromMessage(String messageContent) {
-        if (messageContent.length() <= 5 || messageContent.startsWith("!user") != true) {
-            return null;
+    //Combine with getCommand?
+    private boolean canProcessMessage(Message message) {
+        boolean handleable = false;
+        for (int i = 0; i < commandList.length; i++) {
+            if (message.getContent().toLowerCase().startsWith(commandList[i])) {
+                handleable = true;
+            }
         }
-        String temp = messageContent.substring(6);
-        return temp;
-    }
-
-    private boolean canProcessMessage(String messageContent){
-        if(messageContent.startsWith("!user")) {
-            return true;
+        System.out.println(handleable);                                                                                 //Delete this line.
+        if(handleable == false){                                                                                        //Delete this line.
+            System.out.println("Invalid command");                                                                      //Delete this line.
         }
-        else {
-            return false;
-        }
+        return handleable;
     }
 
     @Override
