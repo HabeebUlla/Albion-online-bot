@@ -6,6 +6,7 @@ import discord4j.core.object.entity.Message;
 
 public class AddGuildKillboardTrackingProcessor implements CommandProcessor {
 
+    static final String COMMAND_NAME = "!add";
     private final AlbionClient albionClient;
     private final DiscordManager discordManager;
 
@@ -24,16 +25,12 @@ public class AddGuildKillboardTrackingProcessor implements CommandProcessor {
         } catch (Exception e) {
             e.printStackTrace();
             String s = "Error: " + e.getMessage();
-            message.getChannel().flatMap(Channel -> Channel.createMessage(s)).subscribe();
+            message.getChannel().subscribe(channel -> discordManager.sendMessage(s, channel));
         }
     }
 
     private String getCommandFromMessage(String messageContent) {
-        if (messageContent.length() <= 4 || messageContent.toLowerCase().startsWith("!add") != true) {
-            return null;
-        }
-        String temp = messageContent.substring(5);
-        return temp;
+        return messageContent.substring(COMMAND_NAME.length()).trim();
     }
 @Override
     public void processCommand(Message message) {

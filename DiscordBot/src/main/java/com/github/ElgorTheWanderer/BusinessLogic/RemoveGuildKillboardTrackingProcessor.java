@@ -5,6 +5,8 @@ import com.github.ElgorTheWanderer.DiscordManager.DiscordManager;
 import discord4j.core.object.entity.Message;
 
 public class RemoveGuildKillboardTrackingProcessor implements CommandProcessor {
+
+    static final String COMMAND_NAME = "!remove";
     private final AlbionClient albionClient;
     private final DiscordManager discordManager;
 
@@ -23,18 +25,15 @@ public class RemoveGuildKillboardTrackingProcessor implements CommandProcessor {
         } catch (Exception e) {
             e.printStackTrace();
             String s = "Error: " + e.getMessage();
-            message.getChannel().flatMap(Channel -> Channel.createMessage(s)).subscribe();
+            message.getChannel().subscribe(channel -> discordManager.sendMessage(s, channel));
         }
     }
 
     private String getCommandFromMessage(String messageContent) {
-        if (messageContent.length() <= 7 || messageContent.toLowerCase().startsWith("!remove") != true) {
-            return null;
-        }
-        String temp = messageContent.substring(8);
-        return temp;
+        return messageContent.substring(COMMAND_NAME.length()).trim();
     }
-@Override
+
+    @Override
     public void processCommand(Message message) {
         replyToRemoveEvent(message);
     }
