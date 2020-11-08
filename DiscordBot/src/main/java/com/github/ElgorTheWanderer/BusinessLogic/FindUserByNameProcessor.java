@@ -6,12 +6,12 @@ import com.github.ElgorTheWanderer.DiscordManager.DiscordManagerObserver;
 import com.github.ElgorTheWanderer.PlayerStructure;
 import discord4j.core.object.entity.Message;
 
-public class UserProcessor {
+public class FindUserByNameProcessor {
 
     private final AlbionClient albionClient;
     private final DiscordManager discordManager;
 
-    public UserProcessor(AlbionClient albionClient, DiscordManager discordManager) {
+    public FindUserByNameProcessor(AlbionClient albionClient, DiscordManager discordManager) {
         this.albionClient = albionClient;
         this.discordManager = discordManager;
     }

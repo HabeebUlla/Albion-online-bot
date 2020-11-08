@@ -33,23 +33,23 @@ public class DiscordManagerObserverImpl implements DiscordManagerObserver {
         }
         if (getCommand(message) == "!user ") {
             System.out.println("User command processed");                                                               //Delete this line.
-            UserProcessor userProcessor = new UserProcessor(albionClient, discordManager);
-            userProcessor.processUserCommand(message);
+            FindUserByNameProcessor findUserByNameProcessor = new FindUserByNameProcessor(albionClient, discordManager);
+            findUserByNameProcessor.processUserCommand(message);
 
         }else if(getCommand(message) == "!add "){
             System.out.println("Add command processed");                                                                //Delete this line.
-            AddProcessor addProcessor = new AddProcessor(albionClient, discordManager);
-            addProcessor.processAddCommand(message);
+            AddGuildKillboardTrackingProcessor addGuildKillboardTrackingProcessor = new AddGuildKillboardTrackingProcessor(albionClient, discordManager);
+            addGuildKillboardTrackingProcessor.processAddCommand(message);
 
 
         }else if(getCommand(message) == "!remove "){
             System.out.println("Remove command processed");                                                             //Delete this line.
-            RemoveProcessor removeProcessor = new RemoveProcessor(albionClient, discordManager);
-            removeProcessor.processRemoveCommand(message);
+            RemoveGuildKillboardTrackingProcessor removeGuildKillboardTrackingProcessor = new RemoveGuildKillboardTrackingProcessor(albionClient, discordManager);
+            removeGuildKillboardTrackingProcessor.processRemoveCommand(message);
         }else if(getCommand(message) == "!price "){
             System.out.println("Price command processed");                                                              //Delete this line.
-            PriceProcessor priceProcessor = new PriceProcessor(albionClient, discordManager);
-            priceProcessor.processPriceCommand(message);
+            CheckItemPriceProcessor checkItemPriceProcessor = new CheckItemPriceProcessor(albionClient, discordManager);
+            checkItemPriceProcessor.processPriceCommand(message);
         }
     }
 

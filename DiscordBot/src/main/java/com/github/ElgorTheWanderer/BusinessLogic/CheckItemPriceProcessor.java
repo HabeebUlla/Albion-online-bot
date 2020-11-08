@@ -5,12 +5,12 @@ import com.github.ElgorTheWanderer.DiscordManager.DiscordManager;
 import com.github.ElgorTheWanderer.PlayerStructure;
 import discord4j.core.object.entity.Message;
 
-public class PriceProcessor {
+public class CheckItemPriceProcessor {
 
     private final AlbionClient albionClient;
     private final DiscordManager discordManager;
 
-    public PriceProcessor(AlbionClient albionClient, DiscordManager discordManager) {
+    public CheckItemPriceProcessor(AlbionClient albionClient, DiscordManager discordManager) {
         this.albionClient = albionClient;
         this.discordManager = discordManager;
     }

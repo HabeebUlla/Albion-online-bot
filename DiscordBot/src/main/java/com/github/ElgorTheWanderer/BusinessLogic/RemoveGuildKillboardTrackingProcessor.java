@@ -4,11 +4,11 @@ import com.github.ElgorTheWanderer.AlbionClient.AlbionClient;
 import com.github.ElgorTheWanderer.DiscordManager.DiscordManager;
 import discord4j.core.object.entity.Message;
 
-public class RemoveProcessor {
+public class RemoveGuildKillboardTrackingProcessor {
     private final AlbionClient albionClient;
     private final DiscordManager discordManager;
 
-    public RemoveProcessor(AlbionClient albionClient, DiscordManager discordManager) {
+    public RemoveGuildKillboardTrackingProcessor(AlbionClient albionClient, DiscordManager discordManager) {
         this.albionClient = albionClient;
         this.discordManager = discordManager;
     }
