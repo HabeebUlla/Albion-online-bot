@@ -4,7 +4,7 @@ import com.github.ElgorTheWanderer.AlbionClient.AlbionClient;
 import com.github.ElgorTheWanderer.DiscordManager.DiscordManager;
 import discord4j.core.object.entity.Message;
 
-public class RemoveGuildKillboardTrackingProcessor {
+public class RemoveGuildKillboardTrackingProcessor implements CommandProcessor {
     private final AlbionClient albionClient;
     private final DiscordManager discordManager;
 
@@ -34,8 +34,8 @@ public class RemoveGuildKillboardTrackingProcessor {
         String temp = messageContent.substring(8);
         return temp;
     }
-
-    public void processRemoveCommand(Message message) {
+@Override
+    public void processCommand(Message message) {
         replyToRemoveEvent(message);
     }
 }

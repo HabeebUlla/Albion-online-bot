@@ -4,7 +4,7 @@ import com.github.ElgorTheWanderer.AlbionClient.AlbionClient;
 import com.github.ElgorTheWanderer.DiscordManager.DiscordManager;
 import discord4j.core.object.entity.Message;
 
-public class AddGuildKillboardTrackingProcessor {
+public class AddGuildKillboardTrackingProcessor implements CommandProcessor {
 
     private final AlbionClient albionClient;
     private final DiscordManager discordManager;
@@ -35,8 +35,8 @@ public class AddGuildKillboardTrackingProcessor {
         String temp = messageContent.substring(5);
         return temp;
     }
-
-    public void processAddCommand(Message message) {
+@Override
+    public void processCommand(Message message) {
         replyToAddEvent(message);
     }
 }

@@ -6,7 +6,7 @@ import com.github.ElgorTheWanderer.DiscordManager.DiscordManagerObserver;
 import com.github.ElgorTheWanderer.PlayerStructure;
 import discord4j.core.object.entity.Message;
 
-public class FindUserByNameProcessor {
+public class FindUserByNameProcessor implements CommandProcessor {
 
     private final AlbionClient albionClient;
     private final DiscordManager discordManager;
@@ -43,7 +43,8 @@ public class FindUserByNameProcessor {
             String temp = messageContent.substring(6);
             return temp;
     }
-    public void processUserCommand(Message message){
+    @Override
+    public void processCommand(Message message){
         replyToUserEvent(message);
     }
 }

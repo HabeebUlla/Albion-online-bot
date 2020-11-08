@@ -5,7 +5,7 @@ import com.github.ElgorTheWanderer.DiscordManager.DiscordManager;
 import com.github.ElgorTheWanderer.PlayerStructure;
 import discord4j.core.object.entity.Message;
 
-public class CheckItemPriceProcessor {
+public class CheckItemPriceProcessor implements CommandProcessor {
 
     private final AlbionClient albionClient;
     private final DiscordManager discordManager;
@@ -37,7 +37,8 @@ public class CheckItemPriceProcessor {
         String temp = messageContent.substring(7);
         return temp;
     }
-    public void processPriceCommand(Message message){
+    @Override
+    public void processCommand(Message message){
         replyToPriceEvent(message);
     }
 }
