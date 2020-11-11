@@ -1,6 +1,5 @@
 package com.github.ElgorTheWanderer.AlbionClient;
 
-import com.github.ElgorTheWanderer.PlayerStructure;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

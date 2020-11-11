@@ -1,4 +1,4 @@
-package com.github.ElgorTheWanderer;
+package com.github.ElgorTheWanderer.AlbionClient;
 
 public class PlayerStructure {
 

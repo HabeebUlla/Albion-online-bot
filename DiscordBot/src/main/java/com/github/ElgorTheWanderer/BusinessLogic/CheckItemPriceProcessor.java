@@ -1,28 +1,28 @@
 package com.github.ElgorTheWanderer.BusinessLogic;
 
 import com.github.ElgorTheWanderer.AlbionClient.AlbionClient;
+import com.github.ElgorTheWanderer.AlbionDataClient.AlbionDataClient;
 import com.github.ElgorTheWanderer.DiscordManager.DiscordManager;
-import com.github.ElgorTheWanderer.PlayerStructure;
 import discord4j.core.object.entity.Message;
 
 public class CheckItemPriceProcessor implements CommandProcessor {
 
     static final String COMMAND_NAME = "!price";
-    private final AlbionClient albionClient;
+    private final AlbionDataClient albionDataClient;
     private final DiscordManager discordManager;
 
-    public CheckItemPriceProcessor(AlbionClient albionClient, DiscordManager discordManager) {
-        this.albionClient = albionClient;
+    public CheckItemPriceProcessor(AlbionDataClient albionDataClient, DiscordManager discordManager) {
+        this.albionDataClient = albionDataClient;
         this.discordManager = discordManager;
     }
 
     private void replyToPriceEvent(Message message) {
 
-        String itemName = null;
-
         try {
-            itemName = getCommandFromMessage(message.getContent());
-            message.getChannel().subscribe(channel -> discordManager.sendMessage("Price command is not implemented yet.\nWork in progress.", channel));
+            String itemName = getCommandFromMessage(message.getContent());
+            String result = albionDataClient.findItemPrice(itemName);
+            System.out.println(result);
+//            message.getChannel().subscribe(channel -> discordManager.sendMessage("Price command is not implemented yet.\nWork in progress.\n" + result, channel));
         } catch (Exception e) {
             e.printStackTrace();
             String s = "Error: " + e.getMessage();

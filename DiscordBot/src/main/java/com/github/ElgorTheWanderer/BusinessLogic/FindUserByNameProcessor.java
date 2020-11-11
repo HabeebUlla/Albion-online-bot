@@ -2,8 +2,7 @@ package com.github.ElgorTheWanderer.BusinessLogic;
 
 import com.github.ElgorTheWanderer.AlbionClient.AlbionClient;
 import com.github.ElgorTheWanderer.DiscordManager.DiscordManager;
-import com.github.ElgorTheWanderer.DiscordManager.DiscordManagerObserver;
-import com.github.ElgorTheWanderer.PlayerStructure;
+import com.github.ElgorTheWanderer.AlbionClient.PlayerStructure;
 import discord4j.core.object.entity.Message;
 
 public class FindUserByNameProcessor implements CommandProcessor {
