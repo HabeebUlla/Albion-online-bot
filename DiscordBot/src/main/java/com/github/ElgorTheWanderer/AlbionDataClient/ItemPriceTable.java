@@ -5,17 +5,17 @@ import java.util.List;
 
 public class ItemPriceTable {
 
-    static class ItemEntry {
+    public static class ItemEntry {
 
-        static class CityEntry {
-            String name;
-            int minSellPrice;
-            int maxBuyPrice;
+        public static class CityEntry {
+            public String name;
+            public int minSellPrice;
+            public int maxBuyPrice;
         }
 
-        String itemId;
-        String localizedItemName;
-        List<CityEntry> cityEntryList = new ArrayList<>();
+        public String itemId;
+        public String localizedItemName;
+        public List<CityEntry> cityEntryList = new ArrayList<>();
     }
-    List<ItemEntry> entryList = new ArrayList<>();
+    public List<ItemEntry> entryList = new ArrayList<>();
 }
