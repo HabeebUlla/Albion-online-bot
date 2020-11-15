@@ -2,6 +2,7 @@ package com.github.ElgorTheWanderer.BusinessLogic;
 
 import com.github.ElgorTheWanderer.AlbionClient.AlbionClient;
 import com.github.ElgorTheWanderer.AlbionDataClient.AlbionDataClient;
+import com.github.ElgorTheWanderer.AlbionDataClient.ItemPriceTable;
 import com.github.ElgorTheWanderer.DiscordManager.DiscordManager;
 import discord4j.core.object.entity.Message;
 
@@ -20,7 +21,7 @@ public class CheckItemPriceProcessor implements CommandProcessor {
 
         try {
             String itemName = getCommandFromMessage(message.getContent());
-            String result = albionDataClient.findItemPrice(itemName);
+            ItemPriceTable result = albionDataClient.findItemPrice(itemName);
             System.out.println(result);
 //            message.getChannel().subscribe(channel -> discordManager.sendMessage("Price command is not implemented yet.\nWork in progress.\n" + result, channel));
         } catch (Exception e) {

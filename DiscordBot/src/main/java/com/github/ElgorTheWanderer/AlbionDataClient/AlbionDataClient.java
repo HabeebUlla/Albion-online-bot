@@ -1,5 +1,5 @@
 package com.github.ElgorTheWanderer.AlbionDataClient;
 
 public interface AlbionDataClient {
-    public String findItemPrice(String itemName);
+    public ItemPriceTable findItemPrice(String itemName);
 }

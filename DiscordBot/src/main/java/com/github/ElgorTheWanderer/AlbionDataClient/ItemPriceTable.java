@@ -1,10 +1,11 @@
 package com.github.ElgorTheWanderer.AlbionDataClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemPriceTable {
 
-    static class Entry {
+    static class ItemEntry {
 
         static class CityEntry {
             String name;
@@ -14,7 +15,7 @@ public class ItemPriceTable {
 
         String itemId;
         String localizedItemName;
-        List<CityEntry> cityEntryList;
+        List<CityEntry> cityEntryList = new ArrayList<>();
     }
-    List<Entry> entryList;
+    List<ItemEntry> entryList = new ArrayList<>();
 }
