@@ -3,6 +3,8 @@ package com.github.ElgorTheWanderer.BusinessLogic;
 import com.github.ElgorTheWanderer.AlbionDataClient.AlbionDataClient;
 import com.github.ElgorTheWanderer.DiscordManager.DiscordManager;
 import discord4j.core.object.entity.Message;
+import discord4j.core.spec.MessageCreateSpec;
+import discord4j.core.spec.Spec;
 
 public class CheckItemPriceProcessor implements CommandProcessor {
 
