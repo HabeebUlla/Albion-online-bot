@@ -3,7 +3,7 @@ package com.github.ElgorTheWanderer.AlbionDataClient;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemPriceTable {
+public class ItemPriceTableStructure {
 
     public static class ItemEntry {
 
