@@ -6,19 +6,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-
 public class ResponseFormatterImpl implements ResponseFormatter {
 
     NumberFormat fmt = NumberFormat.getCompactNumberInstance(
             new Locale("EN", "US"), NumberFormat.Style.SHORT);
 
 
-    private String getItemTableStructureFields(ItemPriceTableStructure result) {
-
+    private String getItemTableStructureFields(ItemPriceTableStructure result, String itemName) {
+        int n = 0;
         String header = String.format("%-13s", "City name");
         for (ItemPriceTableStructure.ItemEntry itemEntry : result.entryList) {
-            String s = String.format("|%-15s", itemEntry.itemId);
+
+            String s = String.format("|%-15s", itemEntry.itemId.substring(0, 2) + "." + n);
             header = header.concat(s);
+            n++;
         }
         header = header.concat("\n");
 
@@ -60,17 +61,19 @@ public class ResponseFormatterImpl implements ResponseFormatter {
             cityRow = cityRow.concat("\n");
             responseBody = responseBody.concat(cityRow);
         }
-        String divider = "==============="
-                + "==============="
-                + "==============="
-                + "==============="
-                + "==============";
-        final String responseMessage = "```" + header + divider + "\n" + responseBody + "```";
+
+        StringBuffer outputBuffer = new StringBuffer(77);
+        for (int i = 0; i < 77; i++) {
+            outputBuffer.append("=");
+        }
+        String divider = outputBuffer.toString();
+
+        final String responseMessage = "```" + itemName + "\n" + header + divider + "\n" + responseBody + "```";
         return responseMessage;
     }
 
     @Override
-    public String createResponse(ItemPriceTableStructure itemPriceTableStructure) {
-        return getItemTableStructureFields(itemPriceTableStructure);
+    public String createResponse(ItemPriceTableStructure itemPriceTableStructure, String itemName) {
+        return getItemTableStructureFields(itemPriceTableStructure, itemName);
     }
 }

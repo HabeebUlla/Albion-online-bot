@@ -2,6 +2,7 @@ package com.github.ElgorTheWanderer.BusinessLogic;
 
 import com.github.ElgorTheWanderer.AlbionClient.AlbionClient;
 import com.github.ElgorTheWanderer.AlbionDataClient.AlbionDataClient;
+import com.github.ElgorTheWanderer.AlbionDataClient.ItemInfoRepositoryStructure;
 import com.github.ElgorTheWanderer.DiscordManager.DiscordManager;
 import com.github.ElgorTheWanderer.DiscordManager.DiscordManagerObserver;
 import discord4j.core.object.entity.Message;
@@ -13,12 +14,12 @@ public class DiscordManagerObserverImpl implements DiscordManagerObserver {
 
     private final Map<String, CommandProcessor> commandMap;
 
-    public DiscordManagerObserverImpl(AlbionClient albionClient, AlbionDataClient albionDataClient, DiscordManager discordManager) {
+    public DiscordManagerObserverImpl(AlbionClient albionClient, AlbionDataClient albionDataClient, DiscordManager discordManager, ItemInfoRepositoryStructure database) {
         HashMap<String, CommandProcessor> commandMap = new HashMap<>();
         commandMap.put(FindUserByNameProcessor.COMMAND_NAME, new FindUserByNameProcessor(albionClient, discordManager));
         commandMap.put(AddGuildKillboardTrackingProcessor.COMMAND_NAME, new AddGuildKillboardTrackingProcessor(albionClient, discordManager));
         commandMap.put(RemoveGuildKillboardTrackingProcessor.COMMAND_NAME, new RemoveGuildKillboardTrackingProcessor(albionClient, discordManager));
-        commandMap.put(CheckItemPriceProcessor.COMMAND_NAME, new CheckItemPriceProcessor(albionDataClient, discordManager));
+        commandMap.put(CheckItemPriceProcessor.COMMAND_NAME, new CheckItemPriceProcessor(albionDataClient, discordManager, database));
         this.commandMap = commandMap;
     }
 

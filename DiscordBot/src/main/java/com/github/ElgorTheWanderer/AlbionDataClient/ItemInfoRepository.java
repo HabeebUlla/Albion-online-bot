@@ -1,9 +1,8 @@
 package com.github.ElgorTheWanderer.AlbionDataClient;
 
 
-import java.util.List;
+import java.io.IOException;
 
 public interface ItemInfoRepository {
-    public List<String> getUniqueIdByLocalizedName(String itemName);
-
+    public ItemInfoRepositoryStructure iterateDatabase() throws IOException;
 }
