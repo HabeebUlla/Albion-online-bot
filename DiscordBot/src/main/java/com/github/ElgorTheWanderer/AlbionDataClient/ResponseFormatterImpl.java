@@ -1,57 +1,72 @@
 package com.github.ElgorTheWanderer.AlbionDataClient;
 
+import java.math.RoundingMode;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
-public class ResponseFormatterImpl implements ResponseFormatter{
+public class ResponseFormatterImpl implements ResponseFormatter {
 
-    private String getItemTableStructureFields(ItemPriceTableStructure result){
+    NumberFormat fmt = NumberFormat.getCompactNumberInstance(
+            new Locale("EN", "US"), NumberFormat.Style.SHORT);
 
-        String header = String.format("|%-13s|","City name, ");
-            for (ItemPriceTableStructure.ItemEntry itemEntry : result.entryList) {
-                String s = String.format("%-15s|", itemEntry.itemId);
-                header = header.concat(s);
+
+    private String getItemTableStructureFields(ItemPriceTableStructure result) {
+
+        String header = String.format("%-13s", "City name");
+        for (ItemPriceTableStructure.ItemEntry itemEntry : result.entryList) {
+            String s = String.format("|%-15s", itemEntry.itemId);
+            header = header.concat(s);
+        }
+        header = header.concat("\n");
+
+        List<String> cityNameList = new ArrayList<>();
+        for (ItemPriceTableStructure.ItemEntry itemEntry : result.entryList) {
+            for (ItemPriceTableStructure.ItemEntry.CityEntry cityEntry : itemEntry.cityEntryList) {
+                if (cityNameList.contains(cityEntry.name)) {
+                    break;
+                }
+                cityNameList.add(cityEntry.name);
             }
-            header = header.concat("\n");
 
-            List<String> cityNameList = new ArrayList<>();
+        }
+
+        String responseBody = "";
+
+        for (String cityName : cityNameList) {
+            String cityRow = String.format("%-13s", cityName);
+
             for (ItemPriceTableStructure.ItemEntry itemEntry : result.entryList) {
+                boolean foundCityEntry = false;
                 for (ItemPriceTableStructure.ItemEntry.CityEntry cityEntry : itemEntry.cityEntryList) {
-                    if(cityNameList.contains(cityEntry.name)){
+                    if (cityEntry.name.equals(cityName)) {
+                        fmt.setRoundingMode(RoundingMode.HALF_UP);
+                        fmt.setMinimumFractionDigits(2);
+                        fmt.setMaximumFractionDigits(2);
+                        String s = String.format("|%-15s", (fmt.format(cityEntry.minSellPrice)) + "/" + (fmt.format(cityEntry.maxBuyPrice)));
+                        cityRow = cityRow.concat(s);
+                        foundCityEntry = true;
                         break;
                     }
-                    cityNameList.add(cityEntry.name);
                 }
+                if (!foundCityEntry) {
+                    String s = String.format("|%-15s", "n/a");
+                    cityRow = cityRow.concat(s);
 
-            }
-
-            String responseBody = "";
-
-            for (String cityName : cityNameList) {
-                String cityRow = String.format("|%-13s|", cityName);
-
-                for (ItemPriceTableStructure.ItemEntry itemEntry : result.entryList) {
-                    boolean foundCityEntry = false;
-                    for (ItemPriceTableStructure.ItemEntry.CityEntry cityEntry : itemEntry.cityEntryList) {
-                        if (cityEntry.name.equals(cityName)) {
-                            String s = String.format("%-15s|", (cityEntry.minSellPrice + "/" + cityEntry.maxBuyPrice));
-                            cityRow = cityRow.concat(s);
-                            foundCityEntry = true;
-                            break;
-                        }
-                    }
-                    if (!foundCityEntry){
-                        String s = String.format("%-15s|", "n/a");
-                        cityRow = cityRow.concat(s);
-
-                    }
                 }
-                cityRow = cityRow.concat("\n");
-                responseBody = responseBody.concat(cityRow);
             }
-            final String responseMessage = "```" + header + responseBody + "```";
-            return responseMessage;
+            cityRow = cityRow.concat("\n");
+            responseBody = responseBody.concat(cityRow);
+        }
+        String divider = "==============="
+                + "==============="
+                + "==============="
+                + "==============="
+                + "==============";
+        final String responseMessage = "```" + header + divider + "\n" + responseBody + "```";
+        return responseMessage;
     }
 
     @Override
