@@ -5,12 +5,11 @@ import reactor.netty.http.client.HttpClient;
 import java.util.List;
 
 public class AlbionDataClientImpl implements AlbionDataClient {
-    private ItemInfoRepositoryStructure database = new ItemInfoRepositoryStructure();
+    private final ItemInfoRepositoryStructure database;
 
     public AlbionDataClientImpl(ItemInfoRepositoryStructure database) {
         this.database = database;
     }
-
 
     private static final String PRICE_ENDPOINT = "https://www.albion-online-data.com/api/v2/stats/prices/";
     private static final String ITEM_QUALITY = "?locations=&qualities=1";

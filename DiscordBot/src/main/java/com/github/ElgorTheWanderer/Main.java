@@ -17,7 +17,7 @@ public class Main {
     private static final AlbionClient albionClient = AlbionClientSyncImpl.getInstance();
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Map<String, String> env = System.getenv();
         String discordToken = env.get("DISCORD_API_KEY");
         assert discordToken != null : "Discord API Key is missing";

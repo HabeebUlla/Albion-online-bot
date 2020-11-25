@@ -1,8 +1,9 @@
-package com.github.ElgorTheWanderer.BusinessLogic;
+package com.github.ElgorTheWanderer.BusinessLogic.ItemPriceProcessor;
 
 import com.github.ElgorTheWanderer.AlbionDataClient.AlbionDataClient;
 import com.github.ElgorTheWanderer.AlbionDataClient.AlbionDataClientImpl;
 import com.github.ElgorTheWanderer.AlbionDataClient.ItemInfoRepositoryStructure;
+import com.github.ElgorTheWanderer.BusinessLogic.CommandProcessor;
 import com.github.ElgorTheWanderer.DiscordManager.DiscordManager;
 import discord4j.core.object.entity.Message;
 

@@ -13,10 +13,12 @@ import java.util.Map;
 public class ItemInfoRepositoryImpl implements ItemInfoRepository {
 
     @Override
-    public ItemInfoRepositoryStructure initializeDatabase() throws IOException {
+    public ItemInfoRepositoryStructure initializeDatabase() {
 
         ItemInfoRepositoryStructure database = new ItemInfoRepositoryStructure();
         Map<String, String> env = System.getenv();
+
+        //Extract to Main
         String databasePath = env.get("DATABASE_PATH");
         assert databasePath != null : "Database file is missing";
 
@@ -46,7 +48,7 @@ public class ItemInfoRepositoryImpl implements ItemInfoRepository {
                     }
                 }
             }
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return database;
