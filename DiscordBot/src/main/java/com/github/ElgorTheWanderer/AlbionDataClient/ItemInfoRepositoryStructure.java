@@ -7,7 +7,6 @@ import java.util.Map;
 
 public class ItemInfoRepositoryStructure {
 
-
     List<UniqueItemEntry> itemEntryList = new ArrayList<>();
     Map<String, ArrayList<String>> mapOfIds = new HashMap<>();
 
@@ -15,7 +14,7 @@ public class ItemInfoRepositoryStructure {
 
         public int index;
         public String uniqueName;
-        List<String> localizedNames = new ArrayList<>();
+        public List<String> localizedNames = new ArrayList<>();
 
     }
 }

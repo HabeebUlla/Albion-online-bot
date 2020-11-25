@@ -14,12 +14,12 @@ public class DiscordManagerObserverImpl implements DiscordManagerObserver {
 
     private final Map<String, CommandProcessor> commandMap;
 
-    public DiscordManagerObserverImpl(AlbionClient albionClient, AlbionDataClient albionDataClient, DiscordManager discordManager, ItemInfoRepositoryStructure database) {
+    public DiscordManagerObserverImpl(AlbionClient albionClient, DiscordManager discordManager, ItemInfoRepositoryStructure database) {
         HashMap<String, CommandProcessor> commandMap = new HashMap<>();
         commandMap.put(FindUserByNameProcessor.COMMAND_NAME, new FindUserByNameProcessor(albionClient, discordManager));
         commandMap.put(AddGuildKillboardTrackingProcessor.COMMAND_NAME, new AddGuildKillboardTrackingProcessor(albionClient, discordManager));
         commandMap.put(RemoveGuildKillboardTrackingProcessor.COMMAND_NAME, new RemoveGuildKillboardTrackingProcessor(albionClient, discordManager));
-        commandMap.put(CheckItemPriceProcessor.COMMAND_NAME, new CheckItemPriceProcessor(albionDataClient, discordManager, database));
+        commandMap.put(CheckItemPriceProcessor.COMMAND_NAME, new CheckItemPriceProcessor(discordManager, database));
         this.commandMap = commandMap;
     }
 

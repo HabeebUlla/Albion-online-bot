@@ -1,45 +1,38 @@
 package com.github.ElgorTheWanderer.AlbionDataClient;
 
 import reactor.netty.http.client.HttpClient;
+
 import java.util.List;
 
 public class AlbionDataClientImpl implements AlbionDataClient {
+    private ItemInfoRepositoryStructure database = new ItemInfoRepositoryStructure();
 
-    private static final AlbionDataClientImpl instance = new AlbionDataClientImpl();
+    public AlbionDataClientImpl(ItemInfoRepositoryStructure database) {
+        this.database = database;
+    }
+
+
+    private static final String PRICE_ENDPOINT = "https://www.albion-online-data.com/api/v2/stats/prices/";
+    private static final String ITEM_QUALITY = "?locations=&qualities=1";
+
     PriceSearchEngine searchEngine = new PriceSearchEngineImpl();
     AlbionDataClientResponseParser responseParser = new AlbionDataClientResponseParser();
-    ItemPriceTableGenerator itemPriceTableGenerator = new ItemPriceTableGeneratorImpl();
-    ResponseFormatter responseFormatter = new ResponseFormatterImpl();
-
-
-    private AlbionDataClientImpl() {
-
-    }
-
-    public static AlbionDataClientImpl getInstance() {
-        return instance;
-    }
-
-    private String getItemPrice(String itemName, ItemInfoRepositoryStructure database){
-
-
+    ItemPriceTableMapper ItemPriceTableMapper = new ItemPriceTableMapperImpl();
+    ItemPriceTableMessageFormatter itemPriceTableMessageFormatter = new ItemPriceTableMessageFormatterImpl();
+    
+    @Override
+    public String getItemPrice(String itemName) {
         List<String> itemIdList = searchEngine.getUniqueIdByLocalizedName(itemName, database);
         String targetUrl = buildUrl(itemIdList);
         String jsonReplyString = HttpClient.create().get().uri(targetUrl).responseContent().aggregate().asString().block();
         List<ItemPriceResponseEntry> responseEntryList = responseParser.getListOfEntries(jsonReplyString);
-        return responseFormatter.createResponse(itemPriceTableGenerator.fillItemTableStructure(itemIdList, responseEntryList, itemName), itemName);
+        return itemPriceTableMessageFormatter.formatItemPriceTable(ItemPriceTableMapper.generateItemTableStructure(itemIdList, responseEntryList, itemName));
     }
 
     private String buildUrl(List list) {
         StringBuilder s = new StringBuilder();
         s.append(list.toString());
-        System.out.println(list.toString());
-        String url = ("https://www.albion-online-data.com/api/v2/stats/prices/" + s + "?locations=&qualities=1").replace("[", "").replace("]", "").replace(" ", "");
-        System.out.println(url);
-        return url;
-    }
-    @Override
-    public String findItemPrice(String itemName, ItemInfoRepositoryStructure database) {
-    return getItemPrice(itemName, database);
+        return (PRICE_ENDPOINT + s + ITEM_QUALITY).replace("[", "")
+                .replace("]", "").replace(" ", "");
     }
 }

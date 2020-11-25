@@ -15,7 +15,6 @@ import java.util.Map;
 public class Main {
 
     private static final AlbionClient albionClient = AlbionClientSyncImpl.getInstance();
-    private static final AlbionDataClient albionDataClient = AlbionDataClientImpl.getInstance();
 
 
     public static void main(String[] args) throws IOException {
@@ -23,10 +22,10 @@ public class Main {
         String discordToken = env.get("DISCORD_API_KEY");
         assert discordToken != null : "Discord API Key is missing";
         ItemInfoRepositoryStructure database;
-        ItemInfoRepository iterator = new ItemInfoRepositoryImpl();
-        database = iterator.iterateDatabase();
+        ItemInfoRepository itemInfoRepository = new ItemInfoRepositoryImpl();
+        database = itemInfoRepository.initializeDatabase();
         DiscordManager discordManager = new DiscordManagerImpl();
-        DiscordManagerObserver observer = new DiscordManagerObserverImpl(albionClient, albionDataClient, discordManager, database);
+        DiscordManagerObserver observer = new DiscordManagerObserverImpl(albionClient, discordManager, database);
         discordManager.setObserver(observer);
         discordManager.run(discordToken);
 
