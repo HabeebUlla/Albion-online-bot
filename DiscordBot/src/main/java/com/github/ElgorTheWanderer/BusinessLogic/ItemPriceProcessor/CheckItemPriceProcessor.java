@@ -9,14 +9,13 @@ import discord4j.core.object.entity.Message;
 
 public class CheckItemPriceProcessor implements CommandProcessor {
 
-    static final String COMMAND_NAME = "!price";
+    public static final String COMMAND_NAME = "!price";
     private final DiscordManager discordManager;
-    private final ItemInfoRepositoryStructure database;
+    ItemPriceTableMessageFormatter itemPriceTableMessageFormatter = new ItemPriceTableMessageFormatterImpl();
 
 
-    public CheckItemPriceProcessor(DiscordManager discordManager, ItemInfoRepositoryStructure database) {
+    public CheckItemPriceProcessor(DiscordManager discordManager) {
         this.discordManager = discordManager;
-        this.database = database;
     }
 
     private String getCommandFromMessage(String messageContent) {
@@ -26,9 +25,10 @@ public class CheckItemPriceProcessor implements CommandProcessor {
     @Override
     public void processCommand(Message message) {
         try {
-            AlbionDataClient albionDataClient = new AlbionDataClientImpl(database);
+            AlbionDataClient albionDataClient = new AlbionDataClientImpl();
             String itemName = getCommandFromMessage(message.getContent());
-            String responseMessage = albionDataClient.getItemPrice(itemName);
+            String responseMessage = itemPriceTableMessageFormatter
+                    .formatItemPriceTable(albionDataClient.getItemPrice(itemName));
             message.getChannel().subscribe(channel -> discordManager.sendMessage(responseMessage, channel));
         } catch (Exception e) {
             e.printStackTrace();

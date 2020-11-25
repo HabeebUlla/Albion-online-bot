@@ -2,25 +2,24 @@ package com.github.ElgorTheWanderer.AlbionDataClient;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.List;
+
 
 public class ItemInfoRepositoryImpl implements ItemInfoRepository {
 
+    private final ItemInfoRepositoryStructure database = new ItemInfoRepositoryStructure();
+
+    public List<String> getItemIdList(String itemName){
+
+    List<String> itemIdList = database.mapOfIds.get(itemName);
+    return itemIdList;
+}
     @Override
-    public ItemInfoRepositoryStructure initializeDatabase() {
-
-        ItemInfoRepositoryStructure database = new ItemInfoRepositoryStructure();
-        Map<String, String> env = System.getenv();
-
-        //Extract to Main
-        String databasePath = env.get("DATABASE_PATH");
-        assert databasePath != null : "Database file is missing";
+    public void initializeDatabase(String databasePath) {
 
         try {
             JSONArray jsonArray = new JSONArray(Files.readString(Paths.get(databasePath)));
@@ -51,6 +50,5 @@ public class ItemInfoRepositoryImpl implements ItemInfoRepository {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return database;
     }
 }

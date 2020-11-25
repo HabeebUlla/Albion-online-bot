@@ -5,27 +5,21 @@ import reactor.netty.http.client.HttpClient;
 import java.util.List;
 
 public class AlbionDataClientImpl implements AlbionDataClient {
-    private final ItemInfoRepositoryStructure database;
-
-    public AlbionDataClientImpl(ItemInfoRepositoryStructure database) {
-        this.database = database;
-    }
 
     private static final String PRICE_ENDPOINT = "https://www.albion-online-data.com/api/v2/stats/prices/";
     private static final String ITEM_QUALITY = "?locations=&qualities=1";
 
-    PriceSearchEngine searchEngine = new PriceSearchEngineImpl();
     AlbionDataClientResponseParser responseParser = new AlbionDataClientResponseParser();
     ItemPriceTableMapper ItemPriceTableMapper = new ItemPriceTableMapperImpl();
-    ItemPriceTableMessageFormatter itemPriceTableMessageFormatter = new ItemPriceTableMessageFormatterImpl();
-    
+    ItemInfoRepositoryImpl itemInfoRepository = new ItemInfoRepositoryImpl();
     @Override
-    public String getItemPrice(String itemName) {
-        List<String> itemIdList = searchEngine.getUniqueIdByLocalizedName(itemName, database);
+    public ItemPriceTableStructure getItemPrice(String itemName) {
+
+        List<String> itemIdList = itemInfoRepository.getItemIdList(itemName);
         String targetUrl = buildUrl(itemIdList);
         String jsonReplyString = HttpClient.create().get().uri(targetUrl).responseContent().aggregate().asString().block();
         List<ItemPriceResponseEntry> responseEntryList = responseParser.getListOfEntries(jsonReplyString);
-        return itemPriceTableMessageFormatter.formatItemPriceTable(ItemPriceTableMapper.generateItemTableStructure(itemIdList, responseEntryList, itemName));
+        return ItemPriceTableMapper.generateItemTableStructure(itemIdList, responseEntryList, itemName);
     }
 
     private String buildUrl(List list) {

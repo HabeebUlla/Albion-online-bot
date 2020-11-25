@@ -1,4 +1,6 @@
-package com.github.ElgorTheWanderer.AlbionDataClient;
+package com.github.ElgorTheWanderer.BusinessLogic.ItemPriceProcessor;
+
+import com.github.ElgorTheWanderer.AlbionDataClient.ItemPriceTableStructure;
 
 import java.util.List;
 

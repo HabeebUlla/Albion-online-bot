@@ -1,4 +1,6 @@
-package com.github.ElgorTheWanderer.AlbionDataClient;
+package com.github.ElgorTheWanderer.BusinessLogic.ItemPriceProcessor;
+
+import com.github.ElgorTheWanderer.AlbionDataClient.ItemPriceTableStructure;
 
 import java.math.RoundingMode;
 import java.text.NumberFormat;
@@ -85,7 +87,6 @@ public class ItemPriceTableMessageFormatterImpl implements ItemPriceTableMessage
                 }
                 cityNameList.add(cityEntry.name);
             }
-
         }
         return cityNameList;
     }
