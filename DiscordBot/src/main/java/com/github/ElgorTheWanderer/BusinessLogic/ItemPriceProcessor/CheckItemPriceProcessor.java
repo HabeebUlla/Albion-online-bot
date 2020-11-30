@@ -1,8 +1,6 @@
 package com.github.ElgorTheWanderer.BusinessLogic.ItemPriceProcessor;
 
 import com.github.ElgorTheWanderer.AlbionDataClient.AlbionDataClient;
-import com.github.ElgorTheWanderer.AlbionDataClient.AlbionDataClientImpl;
-import com.github.ElgorTheWanderer.AlbionDataClient.ItemInfoRepositoryStructure;
 import com.github.ElgorTheWanderer.BusinessLogic.CommandProcessor;
 import com.github.ElgorTheWanderer.DiscordManager.DiscordManager;
 import discord4j.core.object.entity.Message;
@@ -12,10 +10,11 @@ public class CheckItemPriceProcessor implements CommandProcessor {
     public static final String COMMAND_NAME = "!price";
     private final DiscordManager discordManager;
     ItemPriceTableMessageFormatter itemPriceTableMessageFormatter = new ItemPriceTableMessageFormatterImpl();
+    AlbionDataClient albionDataClient;
 
-
-    public CheckItemPriceProcessor(DiscordManager discordManager) {
+    public CheckItemPriceProcessor(DiscordManager discordManager, AlbionDataClient albionDataClient) {
         this.discordManager = discordManager;
+        this.albionDataClient = albionDataClient;
     }
 
     private String getCommandFromMessage(String messageContent) {
@@ -25,7 +24,6 @@ public class CheckItemPriceProcessor implements CommandProcessor {
     @Override
     public void processCommand(Message message) {
         try {
-            AlbionDataClient albionDataClient = new AlbionDataClientImpl();
             String itemName = getCommandFromMessage(message.getContent());
             String responseMessage = itemPriceTableMessageFormatter
                     .formatItemPriceTable(albionDataClient.getItemPrice(itemName));

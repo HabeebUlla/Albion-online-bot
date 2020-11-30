@@ -22,18 +22,18 @@ public class ItemPriceTableMessageFormatterImpl implements ItemPriceTableMessage
         fmt.setMaximumFractionDigits(2);
     }
 
-    private String formatCityColumnCell(String content) {
-        return String.format("%-13s", content);
+    private StringBuilder formatCityColumnCell(String content) {
+        return new StringBuilder(String.format("%-13s", content));
     }
 
-    private String formatItemColumnCell(String content) {
-        return String.format("%-15s", content);
+    private StringBuilder formatItemColumnCell(String content) {
+        return new StringBuilder(String.format("%-15s", content));
     }
 
     @Override
     public String formatItemPriceTable(ItemPriceTableStructure result) {
 
-        String header = formatCityColumnCell("City name");
+        StringBuilder header = formatCityColumnCell("City name");
         for (ItemPriceTableStructure.ItemEntry itemEntry : result.entryList) {
             String itemCell;
             if (itemEntry.itemId.contains("@")) {
@@ -42,14 +42,14 @@ public class ItemPriceTableMessageFormatterImpl implements ItemPriceTableMessage
             } else {
                 itemCell = itemEntry.itemId.substring(0, 2) + ".0";
             }
-            header = header.concat("|" + formatItemColumnCell(itemCell));
+            header.append("|").append(formatItemColumnCell(itemCell));
         }
 
-        header = header.concat("\n");
-        String responseBody = "";
+        header.append("\n");
+        StringBuilder responseBody = new StringBuilder();
         List<String> cityNameList = getCityNameList(result);
         for (String cityName : cityNameList) {
-            String cityRow = formatCityColumnCell(cityName);
+            StringBuilder cityRow = formatCityColumnCell(cityName);
             for (ItemPriceTableStructure.ItemEntry itemEntry : result.entryList) {
                 ItemPriceTableStructure.ItemEntry.CityEntry entry = null;
                 for (ItemPriceTableStructure.ItemEntry.CityEntry cityEntry : itemEntry.cityEntryList) {
@@ -59,21 +59,19 @@ public class ItemPriceTableMessageFormatterImpl implements ItemPriceTableMessage
                     }
                 }
                 if (entry != null) {
-                    cityRow = cityRow.concat("|" + formatItemColumnCell((fmt.format(entry.minSellPrice))
+                    cityRow.append("|").append(formatItemColumnCell((fmt.format(entry.minSellPrice))
                             + "/" + (fmt.format(entry.maxBuyPrice))));
                 } else {
-                    cityRow = cityRow.concat("|" + formatItemColumnCell("n/a"));
+                    cityRow.append("|").append(formatItemColumnCell("n/a"));
                 }
             }
-            cityRow = cityRow.concat("\n");
-            responseBody = responseBody.concat(cityRow);
+            cityRow.append("\n");
+            responseBody.append(cityRow);
         }
 
 
-        String divider = "=".repeat(MAX_STRING_LENGTH);
-        final String responseMessage = BACKTICKS + result.entryList.get(0).localizedItemName + "\n" + header + divider
+        return BACKTICKS + result.entryList.get(0).localizedItemName + "\n" + header + "=".repeat(MAX_STRING_LENGTH)
                 + "\n" + responseBody + BACKTICKS;
-        return responseMessage;
     }
 
     @Override

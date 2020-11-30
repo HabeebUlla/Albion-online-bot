@@ -9,9 +9,15 @@ public class AlbionDataClientImpl implements AlbionDataClient {
     private static final String PRICE_ENDPOINT = "https://www.albion-online-data.com/api/v2/stats/prices/";
     private static final String ITEM_QUALITY = "?locations=&qualities=1";
 
+
     AlbionDataClientResponseParser responseParser = new AlbionDataClientResponseParser();
     ItemPriceTableMapper ItemPriceTableMapper = new ItemPriceTableMapperImpl();
-    ItemInfoRepositoryImpl itemInfoRepository = new ItemInfoRepositoryImpl();
+    ItemInfoRepositoryImpl itemInfoRepository;
+
+    public AlbionDataClientImpl(ItemInfoRepositoryImpl itemInfoRepository) {
+        this.itemInfoRepository = itemInfoRepository;
+    }
+
     @Override
     public ItemPriceTableStructure getItemPrice(String itemName) {
 
@@ -23,9 +29,7 @@ public class AlbionDataClientImpl implements AlbionDataClient {
     }
 
     private String buildUrl(List list) {
-        StringBuilder s = new StringBuilder();
-        s.append(list.toString());
-        return (PRICE_ENDPOINT + s + ITEM_QUALITY).replace("[", "")
-                .replace("]", "").replace(" ", "");
+        String s = String.join(",", list);
+        return (PRICE_ENDPOINT + s + ITEM_QUALITY);
     }
 }

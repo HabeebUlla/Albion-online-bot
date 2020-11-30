@@ -2,6 +2,7 @@ package com.github.ElgorTheWanderer.AlbionDataClient;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -13,11 +14,12 @@ public class ItemInfoRepositoryImpl implements ItemInfoRepository {
 
     private final ItemInfoRepositoryStructure database = new ItemInfoRepositoryStructure();
 
-    public List<String> getItemIdList(String itemName){
+    public List<String> getItemIdList(String itemName) {
 
-    List<String> itemIdList = database.mapOfIds.get(itemName);
-    return itemIdList;
-}
+        List<String> itemIdList = database.mapOfIds.get(itemName);
+        return itemIdList;
+    }
+
     @Override
     public void initializeDatabase(String databasePath) {
 

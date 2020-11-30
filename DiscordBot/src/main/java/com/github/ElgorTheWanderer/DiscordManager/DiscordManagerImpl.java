@@ -7,7 +7,7 @@ import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.MessageChannel;
 
-public class DiscordManagerImpl implements DiscordManager{
+public class DiscordManagerImpl implements DiscordManager {
 
     public DiscordManagerObserver observer;
 
@@ -33,6 +33,6 @@ public class DiscordManagerImpl implements DiscordManager{
 
     @Override
     public void setObserver(DiscordManagerObserver observer) {
-    this.observer = observer;
+        this.observer = observer;
     }
 }

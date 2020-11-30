@@ -13,5 +13,4 @@ public class ItemPriceResponseEntry {
     String sell_price_max_date;
     String buy_price_min_date;
     String buy_price_max_date;
-
 }

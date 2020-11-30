@@ -15,6 +15,5 @@ public class ItemInfoRepositoryStructure {
         public int index;
         public String uniqueName;
         public List<String> localizedNames = new ArrayList<>();
-
     }
 }
