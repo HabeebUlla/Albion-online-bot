@@ -22,18 +22,17 @@ public class ItemPriceTableMessageFormatterImpl implements ItemPriceTableMessage
         fmt.setMaximumFractionDigits(2);
     }
 
-    private StringBuilder formatCityColumnCell(String content) {
-        return new StringBuilder(String.format("%-13s", content));
+    private String formatCityColumnCell(String content) {
+        return String.format("%-13s", content);
     }
 
-    private StringBuilder formatItemColumnCell(String content) {
-        return new StringBuilder(String.format("%-15s", content));
+    private String formatItemColumnCell(String content) {
+        return String.format("%-15s", content);
     }
 
     @Override
     public String formatItemPriceTable(ItemPriceTableStructure result) {
-
-        StringBuilder header = formatCityColumnCell("City name");
+        StringBuilder header = new StringBuilder(formatCityColumnCell("City name"));
         for (ItemPriceTableStructure.ItemEntry itemEntry : result.entryList) {
             String itemCell;
             if (itemEntry.itemId.contains("@")) {
@@ -49,7 +48,7 @@ public class ItemPriceTableMessageFormatterImpl implements ItemPriceTableMessage
         StringBuilder responseBody = new StringBuilder();
         List<String> cityNameList = getCityNameList(result);
         for (String cityName : cityNameList) {
-            StringBuilder cityRow = formatCityColumnCell(cityName);
+            StringBuilder cityRow = new StringBuilder(formatCityColumnCell(cityName));
             for (ItemPriceTableStructure.ItemEntry itemEntry : result.entryList) {
                 ItemPriceTableStructure.ItemEntry.CityEntry entry = null;
                 for (ItemPriceTableStructure.ItemEntry.CityEntry cityEntry : itemEntry.cityEntryList) {
@@ -68,15 +67,12 @@ public class ItemPriceTableMessageFormatterImpl implements ItemPriceTableMessage
             cityRow.append("\n");
             responseBody.append(cityRow);
         }
-
-
         return BACKTICKS + result.entryList.get(0).localizedItemName + "\n" + header + "=".repeat(MAX_STRING_LENGTH)
                 + "\n" + responseBody + BACKTICKS;
     }
 
     @Override
     public List<String> getCityNameList(ItemPriceTableStructure result) {
-
         List<String> cityNameList = new ArrayList<>();
         for (ItemPriceTableStructure.ItemEntry itemEntry : result.entryList) {
             for (ItemPriceTableStructure.ItemEntry.CityEntry cityEntry : itemEntry.cityEntryList) {
