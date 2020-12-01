@@ -1,8 +1,5 @@
 package com.github.ElgorTheWanderer.AlbionClient;
 
-import com.github.ElgorTheWanderer.PlayerStructure;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import reactor.netty.http.client.HttpClient;
 
 public class AlbionClientSyncImpl implements AlbionClient {

@@ -21,7 +21,8 @@ public class RemoveGuildKillboardTrackingProcessor implements CommandProcessor {
 
         try {
             guildName = getCommandFromMessage(message.getContent());
-            message.getChannel().subscribe(channel -> discordManager.sendMessage("Remove command is not implemented yet.\nWork in progress.", channel));
+            message.getChannel().subscribe(channel -> discordManager
+                    .sendMessage("Remove command is not implemented yet.\nWork in progress.", channel));
         } catch (Exception e) {
             e.printStackTrace();
             String s = "Error: " + e.getMessage();
