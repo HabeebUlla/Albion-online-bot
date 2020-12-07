@@ -2,6 +2,8 @@ package com.github.ElgorTheWanderer.BusinessLogic;
 
 import com.github.ElgorTheWanderer.AlbionClient.AlbionClient;
 import com.github.ElgorTheWanderer.AlbionDataClient.AlbionDataClient;
+import com.github.ElgorTheWanderer.BusinessLogic.GuildKillboardProcessor.AddGuildKillboardTrackingProcessor;
+import com.github.ElgorTheWanderer.BusinessLogic.GuildKillboardProcessor.RemoveGuildKillboardTrackingProcessor;
 import com.github.ElgorTheWanderer.BusinessLogic.ItemPriceProcessor.CheckItemPriceProcessor;
 import com.github.ElgorTheWanderer.DiscordManager.DiscordManager;
 import com.github.ElgorTheWanderer.DiscordManager.DiscordManagerObserver;

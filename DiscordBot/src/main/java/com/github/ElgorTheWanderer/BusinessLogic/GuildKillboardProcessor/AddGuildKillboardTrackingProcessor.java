@@ -1,28 +1,28 @@
-package com.github.ElgorTheWanderer.BusinessLogic;
+package com.github.ElgorTheWanderer.BusinessLogic.GuildKillboardProcessor;
 
 import com.github.ElgorTheWanderer.AlbionClient.AlbionClient;
+import com.github.ElgorTheWanderer.BusinessLogic.CommandProcessor;
 import com.github.ElgorTheWanderer.DiscordManager.DiscordManager;
 import discord4j.core.object.entity.Message;
 
-public class RemoveGuildKillboardTrackingProcessor implements CommandProcessor {
+public class AddGuildKillboardTrackingProcessor implements CommandProcessor {
 
-    static final String COMMAND_NAME = "!remove";
+    static final String COMMAND_NAME = "!add";
     private final AlbionClient albionClient;
     private final DiscordManager discordManager;
 
-    public RemoveGuildKillboardTrackingProcessor(AlbionClient albionClient, DiscordManager discordManager) {
+    public AddGuildKillboardTrackingProcessor(AlbionClient albionClient, DiscordManager discordManager) {
         this.albionClient = albionClient;
         this.discordManager = discordManager;
     }
 
-    private void replyToRemoveEvent(Message message) {
+    private void replyToAddEvent(Message message) {
 
         String guildName = null;
 
         try {
             guildName = getCommandFromMessage(message.getContent());
-            message.getChannel().subscribe(channel -> discordManager
-                    .sendMessage("Remove command is not implemented yet.\nWork in progress.", channel));
+            message.getChannel().subscribe(channel -> discordManager.sendMessage("Add command is not implemented yet.\nWork in progress.", channel));
         } catch (Exception e) {
             e.printStackTrace();
             String s = "Error: " + e.getMessage();
@@ -33,9 +33,8 @@ public class RemoveGuildKillboardTrackingProcessor implements CommandProcessor {
     private String getCommandFromMessage(String messageContent) {
         return messageContent.substring(COMMAND_NAME.length()).trim();
     }
-
-    @Override
+@Override
     public void processCommand(Message message) {
-        replyToRemoveEvent(message);
+        replyToAddEvent(message);
     }
 }
