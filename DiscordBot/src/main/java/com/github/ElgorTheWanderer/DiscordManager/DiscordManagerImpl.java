@@ -1,5 +1,6 @@
 package com.github.ElgorTheWanderer.DiscordManager;
 
+import discord4j.common.util.Snowflake;
 import discord4j.core.DiscordClientBuilder;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.lifecycle.ReadyEvent;
@@ -14,10 +15,11 @@ public class DiscordManagerImpl implements DiscordManager {
     @Override
     public void run(String discordToken) {
         GatewayDiscordClient client = DiscordClientBuilder.create(discordToken).build().login().block();
+        assert client != null;
         client.getEventDispatcher().on(ReadyEvent.class)
                 .subscribe(event -> {
                     User self = event.getSelf();
-                    System.out.println(String.format("Logged in as %s#%s", self.getUsername(), self.getDiscriminator()));
+                    System.out.printf("Logged in as %s#%s%n", self.getUsername(), self.getDiscriminator());
                 });
         client.getEventDispatcher().on(MessageCreateEvent.class)
                 .map(MessageCreateEvent::getMessage)

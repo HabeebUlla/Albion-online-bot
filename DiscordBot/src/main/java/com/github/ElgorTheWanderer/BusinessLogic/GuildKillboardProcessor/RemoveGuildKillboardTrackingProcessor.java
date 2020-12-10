@@ -7,7 +7,7 @@ import discord4j.core.object.entity.Message;
 
 public class RemoveGuildKillboardTrackingProcessor implements CommandProcessor {
 
-    static final String COMMAND_NAME = "!remove";
+    public static final String COMMAND_NAME = "!remove";
     private final AlbionClient albionClient;
     private final DiscordManager discordManager;
 
