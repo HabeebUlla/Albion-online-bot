@@ -17,7 +17,7 @@ public class GuildIdRepository {
     static class GuildInfo{
         public String guildName;
         public String guildId;
-        public String lastEventInfo;
+        public String lastEventId;
         public String lastEventTimestamp;
         public String channelId;
         public Map<String, EventStructure> listOfLastEvents= new HashMap<>();

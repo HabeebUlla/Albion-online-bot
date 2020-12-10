@@ -2,6 +2,7 @@ package com.github.ElgorTheWanderer.BusinessLogic.GuildKillboardProcessor;
 
 import com.github.ElgorTheWanderer.AlbionClient.AlbionClient;
 import com.github.ElgorTheWanderer.AlbionKillboardClient.AlbionKillboardClient;
+import com.github.ElgorTheWanderer.AlbionKillboardClient.GuildIdRepository;
 import com.github.ElgorTheWanderer.BusinessLogic.CommandProcessor;
 import com.github.ElgorTheWanderer.DiscordManager.DiscordManager;
 import discord4j.common.util.Snowflake;
@@ -16,6 +17,7 @@ public class AddGuildKillboardTrackingProcessor implements CommandProcessor {
     public static final String COMMAND_NAME = "!add";
     private final AlbionKillboardClient albionKillboardClient;
     private final DiscordManager discordManager;
+
 
     public AddGuildKillboardTrackingProcessor(AlbionKillboardClient albionKillboardClient, DiscordManager discordManager) {
     this.albionKillboardClient = albionKillboardClient;
