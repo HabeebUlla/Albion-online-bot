@@ -28,6 +28,8 @@ public class DiscordManagerImpl implements DiscordManager {
         client.onDisconnect().block();
     }
 
+
+
     @Override
     public void sendMessage(String message, MessageChannel channel) {
         channel.createMessage(message).subscribe();

@@ -47,9 +47,9 @@ public class AlbionKillboardClientImpl implements AlbionKillboardClient {
         //parse
         EventStructure structure = new EventStructure();
         structure.eventId = "test";
-        structure.eventTimestamp = LocalDateTime.now().toString();
+        structure.eventTimeStamp = LocalDateTime.now().toString();
         guildInfo.listOfLastEvents.put(structure.eventId, structure);
-        guildInfo.lastEventTimestamp = structure.eventTimestamp;
+        guildInfo.lastEventTimestamp = structure.eventTimeStamp;
         guildInfo.lastEventId = structure.eventId;
     }
 }
