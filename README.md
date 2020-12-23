@@ -11,7 +11,7 @@ This bot is intended to be free to use.
 Bot will soon be deployed on VPS and available to public.
 
 !price command accepts EN/RUS exect in-game names of items and returns table of best sell and best buy prices in each city for each possible item tier of normal quality.
-It uses https://www.albion-online-data.com/ API, that's why results are no as accurate as one would like it to be.
+It uses https://www.albion-online-data.com/ API, that's why results are not as accurate as one would like it to be.
 Anyway it gives general understanding of prices distribution between cities.
 
 Example images:
