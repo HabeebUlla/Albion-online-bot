@@ -26,14 +26,18 @@ public class AddGuildKillboardTrackingProcessor implements CommandProcessor {
 
     private void replyToAddEvent(Message message) {
 
-        String guildName = null;
-
         try {
-            guildName = getCommandFromMessage(message.getContent());
+            String guildName = getCommandFromMessage(message.getContent());
             MessageChannel channelId = message.getChannel().block();
-            albionKillboardClient.addGuildTracking(guildName, channelId);
-            message.getChannel().subscribe(channel -> discordManager.sendMessage("Add command is not implemented yet.\nWork in progress.", channel));
-        } catch (Exception e) {
+            String guildId = albionKillboardClient.addGuildTracking(guildName, channelId);
+            if (guildId != null) {
+                message.getChannel().subscribe(channel -> discordManager.sendMessage("Guild " + guildName
+                        + " is being tracked.\n" + "GuildID: " + guildId, channel));
+            }else{
+                message.getChannel().subscribe(channel -> discordManager.sendMessage("There is no such guild.", channel));
+            }
+        }
+        catch (Exception e) {
             e.printStackTrace();
             String s = "Error: " + e.getMessage();
             message.getChannel().subscribe(channel -> discordManager.sendMessage(s, channel));
