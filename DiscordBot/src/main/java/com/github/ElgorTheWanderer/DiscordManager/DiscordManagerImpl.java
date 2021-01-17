@@ -1,6 +1,5 @@
 package com.github.ElgorTheWanderer.DiscordManager;
 
-import discord4j.common.util.Snowflake;
 import discord4j.core.DiscordClientBuilder;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.lifecycle.ReadyEvent;
@@ -27,7 +26,6 @@ public class DiscordManagerImpl implements DiscordManager {
                 .subscribe(message -> this.observer.onMessageReceived(message));
         client.onDisconnect().block();
     }
-
 
 
     @Override

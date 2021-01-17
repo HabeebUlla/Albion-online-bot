@@ -23,7 +23,7 @@ class AlbionClientResponseParser {
         return player;
     }
 
-    private PlayerStructure playerFromJSONObject(JSONObject jsonObject){
+    private PlayerStructure playerFromJSONObject(JSONObject jsonObject) {
         PlayerStructure player = new PlayerStructure();
         player.playerId = jsonObject.getString("Id");
         player.playerName = jsonObject.getString("Name");

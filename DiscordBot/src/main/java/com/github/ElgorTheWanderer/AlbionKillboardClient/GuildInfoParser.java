@@ -1,6 +1,6 @@
 package com.github.ElgorTheWanderer.AlbionKillboardClient;
 
-import discord4j.core.object.entity.channel.Channel;
+import discord4j.core.object.entity.channel.MessageChannel;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -11,7 +11,7 @@ import static com.github.ElgorTheWanderer.AlbionKillboardClient.AlbionKillboardC
 
 public class GuildInfoParser {
 
-    public static String parseGuildInfo(String jsonReplyString, String guildName, Channel channelId) {
+    public static String parseGuildInfo(String jsonReplyString, String guildName, MessageChannel channelId) {
         JSONArray arr = new JSONObject(jsonReplyString).getJSONArray("guilds");
         GuildIdRepository.GuildInfo guildInfo = new GuildIdRepository.GuildInfo();
         for (int i = 0; i < arr.length(); i++) {

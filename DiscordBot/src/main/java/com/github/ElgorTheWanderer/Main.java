@@ -14,8 +14,6 @@ import com.github.ElgorTheWanderer.DiscordManager.DiscordManagerObserver;
 
 import java.util.Map;
 
-
-
 public class Main {
 
     private static final AlbionClient albionClient = AlbionClientSyncImpl.getInstance();

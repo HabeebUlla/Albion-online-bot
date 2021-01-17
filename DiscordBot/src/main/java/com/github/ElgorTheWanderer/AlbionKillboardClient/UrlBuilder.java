@@ -1,7 +1,5 @@
 package com.github.ElgorTheWanderer.AlbionKillboardClient;
 
-import com.github.ElgorTheWanderer.AlbionKillboardClient.GuildIdRepository;
-
 public class UrlBuilder {
     private static final String URL_HEAD = "https://gameinfo.albiononline.com/api/gameinfo/events?limit=";
     private static final String URL_MIDDLE = "&offset=";
