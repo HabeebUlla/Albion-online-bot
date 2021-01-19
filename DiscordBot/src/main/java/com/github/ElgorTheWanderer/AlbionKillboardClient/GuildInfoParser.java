@@ -5,6 +5,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import static com.github.ElgorTheWanderer.AlbionKillboardClient.AlbionKillboardClientImpl.guildIdRepository;
 
@@ -22,7 +24,10 @@ public class GuildInfoParser {
                 guildInfo.eventsOffset = 0;
                 guildInfo.channelId = channelId;
                 guildInfo.guildName = guildName;
-                guildInfo.lastEventTimestamp = LocalDateTime.now();
+                guildInfo.lastEventTimestamp = ZonedDateTime.now(ZoneId.of("UTC"));
+
+                System.out.println(guildInfo.lastEventTimestamp);
+
                 guildIdRepository.guildList.add(guildInfo);
                 break;
             }

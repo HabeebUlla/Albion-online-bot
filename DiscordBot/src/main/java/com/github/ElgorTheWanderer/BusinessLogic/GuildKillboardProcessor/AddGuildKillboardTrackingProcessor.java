@@ -1,6 +1,7 @@
 package com.github.ElgorTheWanderer.BusinessLogic.GuildKillboardProcessor;
 
 import com.github.ElgorTheWanderer.AlbionKillboardClient.AlbionKillboardClient;
+import com.github.ElgorTheWanderer.AlbionKillboardClient.GuildIdRepository;
 import com.github.ElgorTheWanderer.BusinessLogic.CommandProcessor;
 import com.github.ElgorTheWanderer.DiscordManager.DiscordManager;
 import discord4j.core.object.entity.Message;
@@ -23,12 +24,23 @@ public class AddGuildKillboardTrackingProcessor implements CommandProcessor {
         try {
             String guildName = getCommandFromMessage(message.getContent());
             MessageChannel channelId = message.getChannel().block();
-            String guildId = albionKillboardClient.addGuildTracking(guildName, channelId);
-            if (guildId != null) {
-                message.getChannel().subscribe(channel -> discordManager.sendMessage("Guild " + guildName
-                        + " is being tracked.\n" + "GuildID: " + guildId, channel));
-            } else {
-                message.getChannel().subscribe(channel -> discordManager.sendMessage("There is no such guild.", channel));
+            boolean uniqueGuild = true;
+            for(GuildIdRepository.GuildInfo guild : GuildIdRepository.guildList){
+                if(guild.guildName.equals(guildName) && guild.channelId == channelId){
+                    message.getChannel().subscribe(channel -> discordManager.sendMessage("Guild " + guildName
+                            + " already tracked.", channel));
+                    uniqueGuild = false;
+                }
+            }
+            if(uniqueGuild) {
+                String guildId = albionKillboardClient.addGuildTracking(guildName, channelId);
+
+                if (guildId != null) {
+                    message.getChannel().subscribe(channel -> discordManager.sendMessage("Guild " + guildName
+                            + " is being tracked.\n" + "GuildID: " + guildId, channel));
+                } else {
+                    message.getChannel().subscribe(channel -> discordManager.sendMessage("There is no such guild.", channel));
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

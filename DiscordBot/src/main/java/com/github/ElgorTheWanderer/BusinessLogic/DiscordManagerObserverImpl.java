@@ -21,7 +21,7 @@ public class DiscordManagerObserverImpl implements DiscordManagerObserver {
         HashMap<String, CommandProcessor> commandMap = new HashMap<>();
         commandMap.put(FindUserByNameProcessor.COMMAND_NAME, new FindUserByNameProcessor(albionClient, discordManager));
         commandMap.put(AddGuildKillboardTrackingProcessor.COMMAND_NAME, new AddGuildKillboardTrackingProcessor(albionKillboardClient, discordManager));
-        commandMap.put(RemoveGuildKillboardTrackingProcessor.COMMAND_NAME, new RemoveGuildKillboardTrackingProcessor(albionClient, discordManager));
+        commandMap.put(RemoveGuildKillboardTrackingProcessor.COMMAND_NAME, new RemoveGuildKillboardTrackingProcessor(albionKillboardClient, discordManager));
         commandMap.put(CheckItemPriceProcessor.COMMAND_NAME, new CheckItemPriceProcessor(discordManager, albionDataClient));
         this.commandMap = commandMap;
     }

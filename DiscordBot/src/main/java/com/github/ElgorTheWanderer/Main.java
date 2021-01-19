@@ -7,12 +7,14 @@ import com.github.ElgorTheWanderer.AlbionDataClient.AlbionDataClientImpl;
 import com.github.ElgorTheWanderer.AlbionDataClient.ItemInfoRepositoryImpl;
 import com.github.ElgorTheWanderer.AlbionKillboardClient.AlbionKillboardClient;
 import com.github.ElgorTheWanderer.AlbionKillboardClient.AlbionKillboardClientImpl;
+import com.github.ElgorTheWanderer.AlbionKillboardClient.EventTracker.KillboardScheduler;
 import com.github.ElgorTheWanderer.BusinessLogic.DiscordManagerObserverImpl;
 import com.github.ElgorTheWanderer.DiscordManager.DiscordManager;
 import com.github.ElgorTheWanderer.DiscordManager.DiscordManagerImpl;
 import com.github.ElgorTheWanderer.DiscordManager.DiscordManagerObserver;
 
 import java.util.Map;
+import java.util.Timer;
 
 public class Main {
 
@@ -29,9 +31,13 @@ public class Main {
         AlbionKillboardClient albionKillboardClient = new AlbionKillboardClientImpl();
         itemInfoRepository.initializeDatabase(databasePath);
         DiscordManager discordManager = new DiscordManagerImpl();
+        KillboardScheduler scheduler = new KillboardScheduler(discordManager);
+        Thread thread = new Thread(scheduler);
+        thread.start();
         DiscordManagerObserver observer = new DiscordManagerObserverImpl(albionClient, discordManager, albionDataClient, albionKillboardClient);
         discordManager.setObserver(observer);
         discordManager.run(discordToken);
+
     }
 }
 

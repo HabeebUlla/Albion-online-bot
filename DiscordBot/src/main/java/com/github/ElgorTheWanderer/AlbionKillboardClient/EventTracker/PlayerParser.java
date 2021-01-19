@@ -13,15 +13,15 @@ public class PlayerParser {
         player.guildId = participant.getString("GuildId");
         player.killFame = participant.getInt("KillFame");
         player.deathFame = participant.getInt("DeathFame");
-        JSONArray equipment = participant.getJSONArray("Equipment");
+//        JSONArray equipment = participant.getJSONArray("Equipment");
 
-        for (int i = 0; i < equipment.length(); i++) {
-            String bodyPart = equipment.getString(i);
-            String itemId = equipment.getJSONObject(i).getString("Type");
-            if (itemId != null) {
-                player.equipment.put(bodyPart, itemId);
-            }
-        }
+//        for (int i = 0; i < equipment.length(); i++) {
+//            String bodyPart = equipment.getString(i);
+//            String itemId = equipment.getJSONObject(i).getString("Type");
+//            if (itemId != null) {
+//                player.equipment.put(bodyPart, itemId);
+//            }
+//        }
         return player;
     }
 }
